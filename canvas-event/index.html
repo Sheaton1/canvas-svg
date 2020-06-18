@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #homework1 {
+        margin-bottom: 20px;
+    }
+</style>
+<body>
+<div id="homework1">
+    <div>作业1</div>
+    <canvas id="homework-canvas1" width="600" height="300"></canvas>
+    <script type="text/javascript">
+        const width = 300, height = 150;
+        class Rect{
+            constructor(x,y,order,name,color, ctx) {
+                this.x = x;
+                this.y = y;
+                this.order = order;
+                this.name = name;
+                this.color = color;
+                this.ctx = ctx;
+            }
+            draw(){
+                this.ctx.fillStyle = this.color;
+                this.ctx.fillRect(this.x,this.y,width,height);
+            }
+        }
+
+        const c1 = document.getElementById("homework-canvas1");
+        const ctx1 = c1.getContext("2d");
+        const rect1 = new Rect(0,0,0,"矩形1","blue",ctx1);
+        const rect2 = new Rect(300,150,0,"矩形2","red",ctx1);
+        rect1.draw();
+        rect2.draw();
+
+        c1.addEventListener("click", (e)=>{
+            const cBox = c1.getBoundingClientRect();
+            // 将鼠标位置转换为相对于canvas的绘制起点的位置
+            const mouseOffset = {"x" : e.clientX - cBox.left, "y" : e.clientY - cBox.top};
+            // 如果鼠标点击位置在矩形一内(距离矩形中心点abs(x)<=矩形宽度的一半,abs(y)<=矩形高度的一半)
+            if(Math.abs(mouseOffset.x - rect1.x - width/2) <= width/2 && Math.abs(mouseOffset.y - rect1.y - height/2) <= height/2){
+                alert("我是矩形1")
+            }
+            // 同上
+            if(Math.abs(mouseOffset.x - rect2.x - width/2) <= width/2 && Math.abs(mouseOffset.y - rect2.y - height/2) <= height/2){
+                alert("我是矩形2")
+            }
+        });
+    </script>
+</div>
+<div id="homework2">
+    <div>作业2</div>
+    <canvas id="homework-canvas2" width="600" height="300"></canvas>
+    <script type="text/javascript">
+        const c2 = document.getElementById("homework-canvas2");
+        const ctx2 = c2.getContext("2d");
+        const rect3 = new Rect(0, 0, 0, "矩形1", "blue", ctx2);
+        const rect4 = new Rect(100, 50, 2, "矩形2", "red", ctx2);
+        const rect5 = new Rect(200, 100, 3, "矩形3", "yellow", ctx2);
+        const rectList = [];
+        rectList.push(rect3);
+        rectList.push(rect4);
+        rectList.push(rect5);
+        rect3.draw();
+        rect4.draw();
+        rect5.draw();
+        c2.addEventListener("click", (e)=>{
+            const cBox = c2.getBoundingClientRect();
+            const mouseOffset = {"x" : e.clientX - cBox.left, "y" : e.clientY - cBox.top};
+            let clickRect = [];
+            rectList.forEach((rect => {
+                if (Math.abs(mouseOffset.x-rect.x-width/2) <= width/2 && Math.abs(mouseOffset.y-rect.y-height/2) <= height/2){
+                    clickRect.push(rect);
+                }
+            }));
+            if(clickRect.length===0)
+                return;
+            let topRect = clickRect[0];
+            clickRect.forEach((rect=>{
+                if(rect.order >= topRect.order){
+                    topRect = rect;
+                }
+            }));
+            alert("我是" + topRect.name)
+        });
+    </script>
+</div>
+</body>
+</html>
+
