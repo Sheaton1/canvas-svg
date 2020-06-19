@@ -3,16 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        svg {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <div>
     <div>svg样式</div>
-    <svg width="300" height="150">
+    <svg width="300" height="300">
         <g>
             <rect x="10" y="10" width="100" height="20" stroke="red" fill="pink"></rect>
 <!--            style中的属性和svg标签属性可以合用，但是style中的优先级高-->
             <rect x="10" y="50" width="100" height="20" stroke="black" fill="green" style="fill: #ffb536; stroke: #ff762c"></rect>
+            <circle r="40" cx="60" cy="120" stroke="black" stroke-width="2" fill="pink"></circle>
+            <ellipse rx="40" ry="50" cx="60" cy="220" fill="green" stroke="yellowgreen"></ellipse>
+            <line x1="10" y1="280" x2="110" y2="280" style="stroke:rgb(255,0,0);stroke-width:2"/>
         </g>
+    </svg>
+    多边形
+<!--    fill-rule的使用-->
+    <svg width="210" height="200">
+        <g>
+            <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:lime;stroke:purple;stroke-width:5;" />
+        </g>
+    </svg>
+    <svg width="210" height="200">
+        <g>
+            <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:lime;stroke:purple;stroke-width:5;fill-rule: evenodd" />
+        </g>
+    </svg>
+    多边线段
+    <svg>
+        <polyline points="0,40 40,40 40,80 80,80 80,120 120,120 120,160" style="fill:white;stroke:red;stroke-width:4" />
+    </svg>
+    <svg>
+        <path d="M150 0 L75 200 L225 200 Z" />
+    </svg>
+    <svg width="500" height="500">
+        <path id="lineAB" d="M 100 350 l 150 -300" stroke="red"
+              stroke-width="3" fill="none" />
+        <path id="lineBC" d="M 250 50 l 150 300" stroke="red"
+              stroke-width="3" fill="none" />
+        <path d="M 175 200 l 150 0" stroke="green" stroke-width="3"
+              fill="none" />
+        <path d="M 100 350 q 150 -300 300 0" stroke="blue"
+              stroke-width="5" fill="none" />
+        <!-- Mark relevant points -->
+        <g stroke="black" stroke-width="3" fill="black">
+            <circle id="pointA" cx="100" cy="350" r="3" />
+            <circle id="pointB" cx="250" cy="50" r="3" />
+            <circle id="pointC" cx="400" cy="350" r="3" />
+        </g>
+        <!-- Label the points -->
+        <g font-size="30" font="sans-serif" fill="black" stroke="none"
+           text-anchor="middle">
+            <text x="100" y="350" dx="-30">A</text>
+            <text x="250" y="50" dy="-10">B</text>
+            <text x="400" y="350" dx="30">C</text>
+        </g>
+    </svg>
+    <svg width="100" height="100">
+        <text x="0" y="40" fill="red" >I love SVG</text>
+    </svg>
+    <svg>
+<!--        滤镜的定义-->
+        <defs>
+            <filter id="f1" x="0" y="0">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+            </filter>
+        </defs>
+<!--        filter="url(#f1)"为滤镜的使用-->
+        <rect width="90" height="90" stroke="green" stroke-width="3"
+              fill="yellow" filter="url(#f1)" />
+    </svg>
+<!--    线性渐变-->
+    <svg>
+        <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:rgb(255,217,121);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:rgb(255,114,107);stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+    </svg>
+<!--    放射性渐变-->
+    <svg>
+        <defs>
+            <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                <stop offset="0%" style="stop-color:rgb(255,255,255);
+      stop-opacity:0" />
+                <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+            </radialGradient>
+        </defs>
+        <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
     </svg>
 </div>
 
